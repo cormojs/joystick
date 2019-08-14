@@ -1,9 +1,6 @@
 import React from 'react'
-
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import Modal from '@material-ui/core/Modal'
-
-import { Sidebar } from './Sidebar'
+import { Dialog, List, ListItem } from '@material-ui/core';
 import { useImages } from '../hooks/useImages'
 
 const useStyles = makeStyles(
@@ -19,16 +16,22 @@ export const Picture = (props: { illustId?: string, onClose(): void }) => {
   const classes = useStyles()
   const images = useImages(props.illustId)
   return (
-    <Modal 
+    <Dialog
       open={props.illustId != null}
+      maxWidth="lg"
       onClose={props.onClose}
     >
       <div>
-        <Sidebar />
         <div className={classes.jsPicture}>
-          { images.map(image => (<img src={image} />)) }
+          <List>
+            { images.map(image => (
+              <ListItem>
+                <img src={image} />
+              </ListItem>
+            )) }
+          </List>
         </div>
       </div>
-    </Modal>
+    </Dialog>
   )
 }
