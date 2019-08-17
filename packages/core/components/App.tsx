@@ -1,14 +1,17 @@
 import React from 'react'
 
-import { useIllust } from '../hooks/useIllust'
+import { useIllusts } from '../hooks/useIllusts'
 import { Picture } from './Picture'
-import { Illust } from '../models/Illust';
 
 export function App() {
-  const [illust, setIllust] = useIllust()
+  const [counter, setCounter] = React.useState<number>(0)
+  const [illusts, setIllusts] = useIllusts(n => setCounter(n))
+
   return (
     <Picture
-      illustId={illust.illustId}
-      onClose={() => setIllust(new Illust(undefined)) } />
+      illustId={illusts.length > 0 ? illusts[counter % illusts.length].illustId : undefined}
+      onClose={() => setIllusts([])}
+      onClick={() => setCounter(n => n+1)}
+    />
   )
 }
